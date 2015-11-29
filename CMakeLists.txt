@@ -32,7 +32,6 @@ common_package_post()
 # //! [Targets]
 add_subdirectory(lib)
 add_subdirectory(apps)
-add_subdirectory(tests)
 # //! [Targets]
 
 # //! [Footer]
