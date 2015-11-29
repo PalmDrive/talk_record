@@ -193,9 +193,13 @@ void interrupt_handler(int sig_no) {
 }
 
 int main(int argc, char *argv[]) {
-  (void)argc;
-  (void)argv;
+    if (argc < 3) {
+        LOG(ERROR, "Not enough arguments.")
+        return -1
+    }
 
+    char* channelName = argv[1];
+#char* hostId = argv[2];
   g_quit_flag = false;
   signal(SIGINT, interrupt_handler);
 
