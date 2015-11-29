@@ -5,7 +5,7 @@
 
 # //! [Setup]
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
-project(Hello)
+project(Talk)
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake
   ${CMAKE_SOURCE_DIR}/CMake/common)
 include(GitExternal)
@@ -19,18 +19,18 @@ set(VERSION_ABI 1)
 # //! [Versioning]
 
 # //! [Scripts]
-set(HELLO_DESCRIPTION "Example project for the Blue Brain Project")
-set(HELLO_MAINTAINER "Blue Brain Project <bbp-open-source@googlegroups.com>")
-set(HELLO_LICENSE LGPL BSD)
+set(TALK_DESCRIPTION "Example project for the Blue Brain Project")
+set(TALK_MAINTAINER "Blue Brain Project <bbp-open-source@googlegroups.com>")
+set(TALK_LICENSE LGPL BSD)
 
-set(COMMON_PROJECT_DOMAIN ch.epfl.bluebrain)
+set(COMMON_PROJECT_DOMAIN palmdrive.cn)
 include(Common)
 common_package(Boost REQUIRED COMPONENTS unit_test_framework program_options)
 common_package_post()
 # //! [Scripts]
 
 # //! [Targets]
-add_subdirectory(hello)
+add_subdirectory(lib)
 add_subdirectory(apps)
 add_subdirectory(tests)
 # //! [Targets]

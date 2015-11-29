@@ -4,9 +4,8 @@
 
 source_group(\\ FILES CMakeLists.txt)
 
-set(HELLO_PUBLIC_HEADERS world.h)
-set(HELLO_HEADERS)
-set(HELLO_SOURCES world.cpp)
-set(HELLO_LINK_LIBRARIES PRIVATE ${Boost_PROGRAM_OPTIONS_LIBRARY})
+set(Agora_HEADERS)
+set(Agora_SOURCES lib/libvoip.a)
+set(Agora_LIBRARY_TYPE STATIC)
 
-common_library(Hello)
+common_library(Agora)
