@@ -193,13 +193,14 @@ void interrupt_handler(int sig_no) {
 }
 
 int main(int argc, char *argv[]) {
-    if (argc < 3) {
-        LOG(ERROR, "Not enough arguments.")
-        return -1
-    }
+  if (argc < 3) {
+      LOG(ERROR, "Not enough arguments.");
+      return -1;
+  }
 
-    char* channelName = argv[1];
-#char* hostId = argv[2];
+  char* channelName = argv[1];
+  //char* hostId = argv[2];
+
   g_quit_flag = false;
   signal(SIGINT, interrupt_handler);
 
@@ -211,12 +212,15 @@ int main(int argc, char *argv[]) {
     "Recording_test_1",
   };
 
+  cnames[0] = channelName;
+
   static const char vendor_key[] = "7289f274bc9b4468bf887f38075e8604";
   for (unsigned i = 0; i < sizeof(cnames) / sizeof(cnames[0]); ++i) {
     AgoraChannel *p = new (std::nothrow)AgoraChannel(vendor_key,
         cnames[i], 0, true, 8000);
     p->Start();
     channels.push_back(p);
+    LOG(INFO, "%d channel name %s\n", i, cnames[i]);
   }
 
   for (unsigned i = 0; i < sizeof(cnames) / sizeof(cnames[0]); ++i) {

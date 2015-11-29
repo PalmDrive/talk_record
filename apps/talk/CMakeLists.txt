@@ -4,6 +4,6 @@
 
 set(TALK_HEADERS agora_sdk_i.h)
 set(TALK_SOURCES main.cpp)
-set(TALK_LINK_LIBRARIES ${PROJECT_SOURCE_DIR}/lib/libvoip.a)
+set(TALK_LINK_LIBRARIES ${PROJECT_SOURCE_DIR}/lib/libvoip.a pthread)
 
 common_application(talk)
