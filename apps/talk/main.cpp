@@ -141,8 +141,6 @@ void AgoraChannel::Start() {
 }
 
 int AgoraChannel::Run() {
-  // is_running_ = true;
-  joined_flag_ = false;
 
   IAgoraSdk *sdk = IAgoraSdk::createInstance(this);
   if (!sdk) {
@@ -163,12 +161,8 @@ int AgoraChannel::Run() {
   while (true) {
     // Fetch voice data from the SDK
     sdk->onTimer();
-
-    if (quit_flag_)
+    if (quit_flag_ || g_quit_flag)
       break;
-
-    if (!joined_flag_)
-      continue;
 
     std::this_thread::sleep_for(duration);
   }
@@ -177,18 +171,17 @@ int AgoraChannel::Run() {
   sdk->leave();
 
   IAgoraSdk::destroyInstance(sdk);
-  joined_flag_ = false;
 
   return 0;
 }
 
 void AgoraChannel::Stop() {
-  quit_flag_ = true;
   worker_.join();
 }
 
 void interrupt_handler(int sig_no) {
   (void)sig_no;
+  LOG(INFO, "signal");
   g_quit_flag = true;
 }
 
@@ -223,13 +216,12 @@ int main(int argc, char *argv[]) {
     LOG(INFO, "%d channel name %s\n", i, cnames[i]);
   }
   
-  while (true) {};
-/* for (unsigned i = 0; i < sizeof(cnames) / sizeof(cnames[0]); ++i) {
+  for (unsigned i = 0; i < sizeof(cnames) / sizeof(cnames[0]); ++i) {
     AgoraChannel *p = channels[i];
     p->Stop();
     delete p;
   }
-*/
+
   LOG(INFO, "All threads joined!\n");
   return 0;
 }
