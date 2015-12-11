@@ -97,7 +97,7 @@ AgoraChannel::AgoraChannel(const string &vendorKey, const string &channelName,
     uint32_t uid, bool audioMixed, int32_t sampleRates)
     :vendor_key_(vendorKey), channel_name_(channelName), uid_(uid),
     audio_mixed_(audioMixed), sample_rates_(sampleRates) {
-  string file_name = "./" + channelName + ".pcm";
+  string file_name = "./test.pcm";
   pcm_file_ = fopen(file_name.c_str(), "wb");
   if (!pcm_file_) {
     LOG(FATAL, "Failed to open pcm file to write: %s",
@@ -222,13 +222,14 @@ int main(int argc, char *argv[]) {
     channels.push_back(p);
     LOG(INFO, "%d channel name %s\n", i, cnames[i]);
   }
-
-  for (unsigned i = 0; i < sizeof(cnames) / sizeof(cnames[0]); ++i) {
+  
+  while (true) {};
+/* for (unsigned i = 0; i < sizeof(cnames) / sizeof(cnames[0]); ++i) {
     AgoraChannel *p = channels[i];
     p->Stop();
     delete p;
   }
-
+*/
   LOG(INFO, "All threads joined!\n");
   return 0;
 }
