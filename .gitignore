@@ -3,3 +3,4 @@ Release
 CMakeLists.txt.user*
 CMake/common/
 build
+*.pcm
