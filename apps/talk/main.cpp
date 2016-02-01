@@ -18,6 +18,7 @@
 #include <vector>
 #include <string>
 #include "agora_sdk_i.h"
+#include <curl/curl.h>
 
 using namespace std;
 using namespace agora;

@@ -4,3 +4,6 @@ CMakeLists.txt.user*
 CMake/common/
 build
 *.pcm
+agorasdk.dat
+agorasdk.log
+bin/
