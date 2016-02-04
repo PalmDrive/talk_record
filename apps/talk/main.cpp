@@ -58,7 +58,7 @@ enum ChannelState {kInit, kJoinFailed, kQuit};
 
 class AgoraChannel : private IAgoraSdkEventHandler {
  public:
-  AgoraChannel(const string &vendorKey, const string &channelName, uint32_t uid=0,
+  AgoraChannel(const string &vendorKey, const string &channelName, const string &fileName, uint32_t uid=0,
       bool audioMixed=true, int32_t sampleRates=8000);
 
   virtual ~AgoraChannel();
@@ -94,12 +94,15 @@ class AgoraChannel : private IAgoraSdkEventHandler {
   std::thread worker_;
 };
 
-AgoraChannel::AgoraChannel(const string &vendorKey, const string &channelName,
+AgoraChannel::AgoraChannel(const string &vendorKey, const string &channelName, const string &fileName
     uint32_t uid, bool audioMixed, int32_t sampleRates)
     :vendor_key_(vendorKey), channel_name_(channelName), uid_(uid),
     audio_mixed_(audioMixed), sample_rates_(sampleRates) {
-  string file_name = "./" + channelName + ".pcm";
+  
+  string file_name = (fileName == "") ? "./" + channelName + ".pcm" : fileName + ".pcm";
+
   pcm_file_ = fopen(file_name.c_str(), "wb");
+
   if (!pcm_file_) {
     LOG(FATAL, "Failed to open pcm file to write: %s",
         strerror(errno));
@@ -194,6 +197,7 @@ int main(int argc, char *argv[]) {
 
   char* channelName = argv[1];
   //char* hostId = argv[2];
+  char* fileName = argv[3];
 
   g_quit_flag = false;
   signal(SIGINT, interrupt_handler);
@@ -209,9 +213,10 @@ int main(int argc, char *argv[]) {
   cnames[0] = channelName;
 
   static const char vendor_key[] = "7289f274bc9b4468bf887f38075e8604";
+
   for (unsigned i = 0; i < sizeof(cnames) / sizeof(cnames[0]); ++i) {
     AgoraChannel *p = new (std::nothrow)AgoraChannel(vendor_key,
-        cnames[i], 0, true, 8000);
+        cnames[i], fileName, 0, true, 8000);
     p->Start();
     channels.push_back(p);
     LOG(INFO, "%d channel name %s\n", i, cnames[i]);
